@@ -1,0 +1,50 @@
+﻿@page "/carreras"
+@inject HttpClient Http
+
+<PageTitle>Carreras</PageTitle>
+
+<h1>Carreras</h1>
+
+<p>Carreras del sitio web.</p>
+
+@if (studies == null)
+{
+    <p><em>Cargando...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var study in studies)
+            {
+                <tr>
+                    <td>@study.id</td>
+                    <td>@study.nombre</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private Study[]? studies;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        studies = await Http.GetFromJsonAsync<Study[]>("https://inscripcionesale.azurewebsites.net/api/apicarreras");
+    }
+
+    public class Study
+    {
+        public int id { get; set; }
+        public string nombre { get; set; }=string.Empty;
+
+    }
+}
