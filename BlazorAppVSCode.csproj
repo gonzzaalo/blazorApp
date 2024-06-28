@@ -11,4 +11,16 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.0" PrivateAssets="all" />
   </ItemGroup>
 
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Layout\ComponenteTitulo.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Layout\ComponenteTitulo.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Layout\ComponenteTitulo.razor" />
+  </ItemGroup>
+
 </Project>
