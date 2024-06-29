@@ -18,6 +18,7 @@ else
             <tr>
                 <th>Id</th>
                 <th>Nombre</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -26,6 +27,11 @@ else
                 <tr>
                     <td>@study.id</td>
                     <td>@study.nombre</td>
+                    <td>
+                        <NavLink class="nav-link" href=@($"editarcarrera?idCarrera={@study.id}")>
+                            Editar
+                        </NavLink>
+                    </td>
                 </tr>
             }
         </tbody>
