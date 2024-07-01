@@ -1,0 +1,57 @@
+@page "/peliculas"
+@inject HttpClient Http
+
+<PageTitle>Peliculas</PageTitle>
+
+<h1 style="color: rgb(35, 221, 35); font-weight: bold;">Peliculas.</h1>
+
+<p style= "color:rgb(31, 102, 233); font-weight: bold;">Los mejores estrenos!!!! 🎥🎬</p>
+
+@if (pelis == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead >
+            <tr style="color: rgb(250, 16, 16); font-weight: bold;" >
+                <th >Título</th>
+                <th >Genero</th>
+                <th>Duración</th>
+                <th>Sinopsis</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var peli in pelis)
+            {
+                <tr>
+                    <td>@peli.nombre</td>
+                    <td>@peli.genero</td>
+                    <td>@peli.duracion</td>
+                    <td>@peli.sinopsis</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private Pelicula[]? pelis;
+
+    protected override async Task OnInitializedAsync()
+    {
+        pelis = await Http.GetFromJsonAsync<Pelicula[]>("https://practicasprof2023-a1a9.restdb.io/rest/peliculas?apikey=6467b0a90b60fc42f4e197fc");
+    }
+
+    public class Pelicula
+    {
+        public string _id { get; set; }
+        public string nombre { get; set; }
+        public string genero { get; set; }
+        public string trailer_url { get; set; }
+        public string sinopsis { get; set; }
+        public string portada_url { get; set; }
+        public int duracion { get; set; }
+    }
+}

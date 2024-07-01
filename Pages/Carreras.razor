@@ -1,0 +1,50 @@
+@page "/carreras"
+@inject HttpClient Http
+
+<PageTitle>Carreras</PageTitle>
+
+<h1 style="color: rgb(35, 221, 35); font-weight: bold;">Carreras.</h1>
+
+<p style= "color:rgb(31, 102, 233); font-weight: bold;">Carreras del sitio. </p>
+
+@if (studies == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead >
+            <tr style="color: rgb(250, 16, 16); font-weight: bold;" >
+                <th >Id</th>
+                <th >Nombre</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var study in studies)
+            {
+                <tr>
+                    <td>@study.id</td>
+                    <td>@study.nombre</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private Study[]? studies;
+
+    protected override async Task OnInitializedAsync()
+    {
+        studies = await Http.GetFromJsonAsync<Study[]>("https://inscripcionesgonzaa.azurewebsites.net/api/apicarreras");
+    }
+
+    public class Study
+    {
+        public int id {get; set;}
+        public string nombre { get; set; } = string.Empty;
+    }
+}
