@@ -13,10 +13,11 @@ else
     <h3>Editando carrera @carrera.nombre</h3>
     <EditForm Model="carrera" OnValidSubmit="GuardarCarrera" >
         <DataAnnotationsValidator />
+        <label class="form-control mb-2" for="txtCarrera">Carrera:</label>
+        <input class="form-control mb-2" type="text" @bind="carrera.nombre"/>
         <ValidationSummary />
-        <label class="form-control" for="txtCarrera">Carrera:</label>
-        <input class="form-control" type="text" @bind="carrera.nombre"/>
-        <button class="btn btn-primary" type="submit">Guardar</button>
+        <button class="btn btn-primary mb-2" type="submit">Guardar</button>
+        
     </EditForm>
 }
 @code {

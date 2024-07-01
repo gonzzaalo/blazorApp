@@ -23,4 +23,10 @@
     <None Include="Layout\ComponenteTitulo.razor" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Pages\EditarCarrera2.razor">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+  </ItemGroup>
+
 </Project>
