@@ -1,5 +1,5 @@
 ﻿@page "/alumnos"
-@inject HttpClient Http
+@inject IAlumnoService alumnoService
 
 <PageTitle>Alumnos</PageTitle>
 
@@ -37,20 +37,13 @@ else
 }
 
 @code {
-    private Alumno[]? students;
+    private List<Alumno>? students;
 
 
     protected override async Task OnInitializedAsync()
     {
-        students = await Http.GetFromJsonAsync<Alumno[]>("https://inscripcionesale.azurewebsites.net/api/apialumnos");
+        students =  await alumnoService.Get();
     }
 
-    public class Alumno
-    {
-        public int id { get; set; }
-        public string apellidoNombre { get; set; }=string.Empty;
-        public string telefono { get; set; } = string.Empty;
-        public string direccion { get; set; } = string.Empty;
-        public string email { get; set; } = string.Empty;
-    }
+
 }

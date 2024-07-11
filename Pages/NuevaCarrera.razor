@@ -1,4 +1,4 @@
-﻿@page "/editarcarrera"
+﻿@page "/nuevacarrera"
 @inject ICarreraService carreraService
 @inject NavigationManager NavigationManager
 
@@ -8,7 +8,7 @@
 }
 else
 {
-    <h3>Editando carrera @carrera.nombre</h3>
+    <h3>Cargando nueva carrera</h3>
     <EditForm Model="carrera" OnValidSubmit="GuardarCarrera" >
         <DataAnnotationsValidator />
         <label class="form-control mb-2" for="txtCarrera">Carrera:</label>
@@ -19,20 +19,17 @@ else
     </EditForm>
 }
 @code {
-    [SupplyParameterFromQuery]
-    [Parameter]
-    public string? idCarrera { get; set; }
 
-    public Carrera? carrera { get; set; }
+    public Carrera? carrera { get; set; } 
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        carrera = await carreraService.Get(int.Parse(idCarrera));
+        carrera = new Carrera();
     }
 
     private async Task GuardarCarrera()
     {
-        await carreraService.Put(carrera);
+        var response = await carreraService.Add(carrera);
         NavigationManager.NavigateTo("/carreras");
     }
 }
