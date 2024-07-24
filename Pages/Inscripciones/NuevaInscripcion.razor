@@ -1,0 +1,59 @@
+﻿@page "/nuevainscripcion"
+@inject IGenericService<Inscripcion> inscripcionService
+@inject IGenericService<Alumno> alumnoService
+@inject IGenericService<Carrera> carreraService
+@inject NavigationManager NavigationManager
+
+@if (alumnos == null || carreras== null)
+{
+    <p><em>Cargando...</em></p>
+}
+else
+{
+    <h3>Editando una inscripción </h3>
+    <EditForm Model="inscripcion" OnValidSubmit="GuardarInscripcion">
+        <DataAnnotationsValidator />
+        <label class="form-control mb-2" >Fecha:</label>
+        <InputDate class="form-control mb-2"  @bind-Value="inscripcion.Fecha"/>
+        <label class="form-control mb-2">Alumno:</label>
+        <InputSelect class="form-control mb-2" @bind-Value="inscripcion.AlumnoId">
+            @foreach(var alumno in alumnos)
+            {
+                <option value="@alumno.Id">@alumno.apellidoNombre</option>
+            }
+        </InputSelect>
+        <label class="form-control mb-2">Carrera:</label>
+        <InputSelect class="form-control mb-2" @bind-Value="inscripcion.CarreraId">
+            @foreach (var carrera in carreras)
+            {
+                <option value="@carrera.id">@carrera.nombre</option>
+            }
+        </InputSelect>
+        <ValidationSummary />
+        <button class="btn btn-primary mb-2" type="submit">Guardar</button>
+        <button class="btn btn-primary mb-2" type="button" @onclick="@(()=>NavigationManager.NavigateTo($"/inscripciones"))">Volver a la lista</button>
+    </EditForm>
+}
+@code {
+    [SupplyParameterFromQuery]
+    [Parameter]
+    public int idInscripcion { get; set; }
+
+    public Inscripcion? inscripcion { get; set; } 
+    private List<Carrera>? carreras { get; set; }
+    private List<Alumno>? alumnos { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        inscripcion = new Inscripcion() { Fecha = DateTime.Now };
+        carreras = await carreraService.GetAllAsync();
+        alumnos = await alumnoService.GetAllAsync();
+    }
+
+    private async Task GuardarInscripcion()
+    {
+        await inscripcionService.AddAsync(inscripcion);
+        NavigationManager.NavigateTo("/inscripciones");
+    }
+}
+

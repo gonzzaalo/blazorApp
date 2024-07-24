@@ -16,7 +16,7 @@ namespace BlazorAppVSCode.Services
         public async Task<List<Alumno>?> Get()
         {
             var response = await client.GetAsync("apialumnos");
-            return await JsonSerializer.DeserializeAsync<List<Alumno>>(await response.Content.ReadAsStreamAsync());
+            return await JsonSerializer.DeserializeAsync<List<Alumno>>(await response.Content.ReadAsStreamAsync(),this.options);
         }
     }
 

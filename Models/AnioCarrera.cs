@@ -6,7 +6,7 @@ namespace BlazorAppVSCode.Models
     {
         public int Id { get; set; }
         public string Nombre { get; set; } = string.Empty;
-        public int CarreraId { get; set; }
+        public int? CarreraId { get; set; }
         public Carrera? Carrera { get; set; }
         [NotMapped]
         public string AñoYCarrera {

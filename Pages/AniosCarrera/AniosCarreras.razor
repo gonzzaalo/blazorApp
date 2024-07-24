@@ -12,7 +12,7 @@
 }
 else
 {
-    <NavLink class="nav-link" href="nuevacarrera">
+    <NavLink class="nav-link" href=@($"nuevoaniocarrera?idCarrera={idCarrera}&nombreCarrera={nombreCarrera}")>  
         Nuevo Año Carrera
     </NavLink>
     <table class="table">
@@ -20,6 +20,8 @@ else
             <tr>
                 <th>Id</th>
                 <th>Nombre</th>
+                <th></th>
+                <th></th>
                 <th></th>
             </tr>
         </thead>
@@ -30,7 +32,12 @@ else
                     <td>@aniocarrera.Id</td>
                     <td>@aniocarrera.Nombre</td>
                     <td>
-                        <NavLink class="nav-link" href=@($"editarcarrera?idCarrera={aniocarrera.Id}")>
+                        <NavLink class="nav-link" href=@($"materias?idAnioCarrera={aniocarrera.Id}&nombreAnioCarrera={aniocarrera.AñoYCarrera}")>
+                            Materias
+                        </NavLink>
+                    </td>
+                    <td>
+                        <NavLink class="nav-link" href=@($"editaraniocarrera?idAnioCarrera={aniocarrera.Id}&nombreCarrera={nombreCarrera}")>
                             Editar
                         </NavLink>
                     </td>
@@ -73,7 +80,7 @@ else
         if (respuesta.IsConfirmed)
         {
             await aniocarreraService.DeleteAsync(anioCarrera.Id);
-            anioscarreras = await aniocarreraService.GetAllAsync();
+            anioscarreras = await aniocarreraService.GetByCarreraAsync(idCarrera);
             StateHasChanged();
         }
     }

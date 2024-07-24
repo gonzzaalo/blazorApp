@@ -4,7 +4,7 @@ namespace BlazorAppVSCode.Models
 {
     public class Alumno
     {
-        public int id { get; set; }
+        public int Id { get; set; }
         [Required]
         public string apellidoNombre { get; set; } = string.Empty;
         public string telefono { get; set; } = string.Empty;

@@ -1,0 +1,75 @@
+﻿@page "/inscripciones"
+
+@inject IGenericService<Inscripcion> inscripcionService
+@inject SweetAlertService SweetAlert
+
+<PageTitle>Inscripciones</PageTitle>
+<h1>Inscripciones a materias</h1>
+
+@if (inscripciones == null)
+{
+    <p><em>Cargando...</em></p>
+}
+else
+{
+    <NavLink class="nav-link" href=@($"nuevainscripcion")>  
+        Nueva Inscripción
+    </NavLink>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Alumno</th>
+                <th>Carrera</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var inscripcion in inscripciones)
+            {
+                <tr>
+                    <td>@inscripcion.Id</td>
+                    <td>@inscripcion.Alumno.apellidoNombre</td>
+                    <td>@inscripcion.Carrera.nombre</td>
+                    <td>
+                        <NavLink class="nav-link" href=@($"editarinscripcion?idInscripcion={inscripcion.Id}")>
+                            Editar
+                        </NavLink>
+                    </td>
+                    <td>
+                        <button title="Eliminar" class="btn btn-danger" @onclick="@(()=>Eliminar(inscripcion))">Eliminar</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+
+    private List<Inscripcion>? inscripciones;
+
+    protected override async Task OnInitializedAsync()
+    {
+        inscripciones = await inscripcionService.GetAllAsync();
+    }
+
+    private async void Eliminar(Inscripcion inscripcion)
+    {
+        SweetAlertResult respuesta = await SweetAlert.FireAsync(new SweetAlertOptions
+            {
+                Title = "Borrando Inscripción",
+                Text = $"¿Está seguro que desea borrar la inscripción de {inscripcion.Alumno?.apellidoNombre}",
+                Icon = SweetAlertIcon.Warning,
+                ShowCancelButton = true,
+                ConfirmButtonText = "Si, quiero borrarlo!",
+                CancelButtonText = "No, espera"
+            });
+        if (respuesta.IsConfirmed)
+        {
+            await inscripcionService.DeleteAsync(inscripcion.Id);
+            inscripciones = await inscripcionService.GetAllAsync();
+            StateHasChanged();
+        }
+    }
+}
