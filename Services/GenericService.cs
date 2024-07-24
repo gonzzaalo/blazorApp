@@ -1,4 +1,5 @@
-﻿using BlazorAppVSCode.Interfaces;
+﻿using BlazorAppVSCode.Class;
+using BlazorAppVSCode.Interfaces;
 using BlazorAppVSCode.Models;
 using System.Net.Http.Json;
 using System.Text.Json;
@@ -6,62 +7,66 @@ using static System.Net.WebRequestMethods;
 
 namespace BlazorAppVSCode.Services
 {
-    public class CarreraService : ICarreraService
+    public class GenericService<T> : IGenericService<T> where T : class
     {
         private readonly HttpClient client;
         private readonly JsonSerializerOptions options;
+        private readonly string _endpoint;
 
-        public CarreraService(HttpClient client)
+        public GenericService(HttpClient client)
         {
             this.client = client;
             this.options = new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
+            this._endpoint= ApiEndpoints.GetEndpoint(typeof(T).Name);
         }
 
-        public async Task<List<Carrera>?> Get()
+        public async Task<List<T>?> GetAllAsync()
         {
-            var response = await client.GetAsync("apicarreras");
+            var response = await client.GetAsync(_endpoint);
             var content = await response.Content.ReadAsStringAsync();
             if (!response.IsSuccessStatusCode)
             {
                 throw new ApplicationException(content?.ToString());
             }
-            return JsonSerializer.Deserialize<List<Carrera>>(content, options); ;
+            return JsonSerializer.Deserialize<List<T>>(content, options); ;
         }
 
-        public async Task<Carrera?> Get(int idCarrera)
+        public async Task<T?> GetByIdAsync(int id)
         {
-            var response = await client.GetAsync($"apicarreras/{idCarrera}");
+            var response = await client.GetAsync($"{_endpoint}/{id}");
             var content= await response.Content.ReadAsStreamAsync();
             if (!response.IsSuccessStatusCode)
             {
                 throw new ApplicationException(content?.ToString());
             }
-            return  JsonSerializer.Deserialize<Carrera>(content,options);
+            return  JsonSerializer.Deserialize<T>(content,options);
         }
 
-        public async Task<Carrera?> Add(Carrera carrera)
+        public async Task<T?> AddAsync(T? entity)
         {
-            var response=await client.PostAsJsonAsync("apicarreras", carrera);
+            var response=await client.PostAsJsonAsync(_endpoint, entity);
             var content=await response.Content.ReadAsStreamAsync();
             if (!response.IsSuccessStatusCode)
             {
                 throw new ApplicationException(content?.ToString()); 
             }
-            return JsonSerializer.Deserialize<Carrera>(content, options);
+            return JsonSerializer.Deserialize<T>(content, options);
         }  
         
-        public async Task Put(Carrera? carrera)
+        public async Task UpdateAsync(T? entity)
         {
-            var response=await client.PutAsJsonAsync($"apicarreras/{carrera?.id}",carrera);
+            var idValue = entity.GetType().GetProperty("Id").GetValue(entity);
+
+            var response =await client.PutAsJsonAsync($"{_endpoint}/{idValue}",entity);
             if(!response.IsSuccessStatusCode)
             {
                 throw new ApplicationException(response?.ToString());
             }
         }
 
-        public async Task Delete(int idCarrera)
+        public async Task DeleteAsync(int id)
         {
-            var response=await client.DeleteAsync($"apicarreras/{idCarrera}");
+            var response=await client.DeleteAsync($"{_endpoint}/{id}");
             if(!response.IsSuccessStatusCode)
             {
                 throw new ApplicationException(response.ToString());
@@ -69,12 +74,4 @@ namespace BlazorAppVSCode.Services
         }
     }
 
-    public interface ICarreraService
-    {
-        public Task<List<Carrera>?> Get();
-        public Task<Carrera?> Get(int idCarrera);
-        public Task<Carrera?> Add(Carrera? carrera);
-        public Task Put(Carrera? carrera);
-        public Task Delete(int idCarrera);
-    }
 }

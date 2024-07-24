@@ -1,4 +1,5 @@
 ﻿@page "/carreras"
+
 @inject ICarreraService carreraService
 @inject SweetAlertService SweetAlert
 
@@ -20,6 +21,7 @@ else
                 <th>Id</th>
                 <th>Nombre</th>
                 <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -28,6 +30,11 @@ else
                 <tr>
                     <td>@carrera.id</td>
                     <td>@carrera.nombre</td>
+                    <td>
+                        <NavLink class="nav-link" href=@($"anioscarreras?idCarrera={@carrera.id}&nombreCarrera={carrera.nombre}")>
+                            Años carrera
+                        </NavLink>
+                    </td>
                     <td>
                         <NavLink class="nav-link" href=@($"editarcarrera?idCarrera={@carrera.id}")>
                             Editar
