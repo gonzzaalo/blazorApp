@@ -1,0 +1,104 @@
+﻿@* @page "/nuevodetalleinscripcion" *@
+@inject IDetalleInscripcionService detalleInscripcionService
+@inject IMateriaService materiaService
+@inject IAnioCarreraService anioCarreraService
+@inject IGenericService<Inscripcion> inscripcionService
+@inject SweetAlertService SweetAlert
+@inject NavigationManager NavigationManager
+@inject ILogger<NuevoDetalleInscripcion> logger;
+
+@if (inscripcion == null|| materias==null || aniosCarrera==null)
+{
+    <p><em>Cargando...</em></p>
+}
+else
+{
+    
+    <EditForm Model="detalleInscripcion" OnValidSubmit="GuardarDetalleInscripcion" >
+        <DataAnnotationsValidator />
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <label class="form-label mb-2">Modalidad:</label>
+                    <InputSelect class="form-control mb-2" @bind-Value="detalleInscripcion.ModalidadCursado">
+                        @foreach (var option in Enum.GetValues(typeof(ModalidadCursadoEnum)))
+                        {
+                            <option value="@option">@option</option>
+                        }
+                    </InputSelect>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label mb-2">Año:</label>
+                    <select class="form-control mb-2"  @onchange="ActualizarMaterias">
+                        @foreach (var anioCarrera in aniosCarrera)
+                        {
+                            <option value="@anioCarrera.Id">@anioCarrera.Nombre</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label mb-2">Materia:</label>
+                    <InputSelect class="form-control mb-2" @bind-Value="detalleInscripcion.MateriaId">
+                        @foreach (var materia in materias)
+                        {
+                            <option value="@materia.Id">@materia.Nombre</option>
+                        }
+                    </InputSelect>
+                </div>
+                <div class="col-md-3">
+                <ValidationSummary />
+                    <button class="btn btn-primary mb-2" type="submit">Agregar</button>
+        @* <button class="btn btn-primary mb-2" type="button" @onclick="@(()=>NavigationManager.NavigateTo($"/detalleinscripciones?idInscripcion={idInscripcion}&nombreInscripcion={nombreInscripcion}"))">Volver a la lista</button> *@
+                </div>
+            </div>
+        </div>
+    </EditForm>
+}
+@code {
+    [Parameter]
+    [EditorRequired]
+    public int idInscripcion { get; set; }
+
+    [Parameter]
+    [EditorRequired]
+    public string? nombreInscripcion { get; set; }
+
+    [Parameter]
+    public EventCallback OnUpdateListaDetalleInscripciones { get; set; }
+
+
+    public DetalleInscripcion? detalleInscripcion { get; set; } 
+
+    private List<Materia>? materias { get; set; }
+    private List<AnioCarrera>? aniosCarrera { get; set; }
+    private Inscripcion? inscripcion { get; set; }
+    private int idAnioCarrera { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        detalleInscripcion = new DetalleInscripcion();
+        detalleInscripcion.InscripcionId = idInscripcion;
+        inscripcion = await inscripcionService.GetByIdAsync(idInscripcion);
+        aniosCarrera = await anioCarreraService.GetByCarreraAsync(inscripcion?.CarreraId);
+        materias = await materiaService.GetByAnioCarreraAsync(aniosCarrera?.First().Id);
+        logger.LogInformation("Se cargaron los combos");
+
+
+    }
+    private async Task ActualizarMaterias(ChangeEventArgs e)
+    {
+        idAnioCarrera = int.Parse(e.Value.ToString());
+        logger.LogInformation($"Se actualizó la lista de materias con el aniocarrera={idAnioCarrera}");
+
+        materias= await materiaService.GetByAnioCarreraAsync(idAnioCarrera);
+
+    }
+
+    private async Task GuardarDetalleInscripcion()
+    {
+        var response = await detalleInscripcionService.AddAsync(detalleInscripcion);
+        // NavigationManager.NavigateTo($"/detalleinscripciones?idInscripcion={idInscripcion}&nombreInscripcion={nombreInscripcion}");
+        OnUpdateListaDetalleInscripciones.InvokeAsync();
+    }
+}
+

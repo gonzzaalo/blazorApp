@@ -1,4 +1,5 @@
 ﻿@page "/detalleinscripciones"
+@using BlazorAppVSCode.Layout.DetalleInscripcion
 
 @inject IDetalleInscripcionService detalleInscripcionService
 @inject SweetAlertService SweetAlert
@@ -12,9 +13,7 @@
 }
 else
 {
-    <NavLink class="nav-link" href=@($"nuevodetalleinscripcion?idInscripcion={idInscripcion}&nombreInscripcion={nombreInscripcion}")>  
-        Inscribir a una materia
-    </NavLink>
+    <NuevoDetalleInscripcion idInscripcion="@idInscripcion" nombreInscripcion="@nombreInscripcion" OnUpdateListaDetalleInscripciones="UpdateListaDetallesInscripciones"/>
     <table class="table">
         <thead>
             <tr>
@@ -51,7 +50,7 @@ else
 @code {
     [SupplyParameterFromQuery]
     [Parameter]
-    public int? idInscripcion { get; set; }
+    public int idInscripcion { get; set; }
 
     [SupplyParameterFromQuery]
     [Parameter]
@@ -81,5 +80,10 @@ else
             detallesInscripcion = await detalleInscripcionService.GetByInscripcionAsync(idInscripcion);
             StateHasChanged();
         }
+    }
+    private async Task UpdateListaDetallesInscripciones()
+    {
+        detallesInscripcion = await detalleInscripcionService.GetByInscripcionAsync(idInscripcion);
+        StateHasChanged();
     }
 }
