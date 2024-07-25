@@ -22,6 +22,8 @@ else
                 <th>Alumno</th>
                 <th>Carrera</th>
                 <th></th>
+                <th></th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -31,6 +33,11 @@ else
                     <td>@inscripcion.Id</td>
                     <td>@inscripcion.Alumno.apellidoNombre</td>
                     <td>@inscripcion.Carrera.nombre</td>
+                    <td>
+                        <NavLink class="nav-link" href=@($"detalleinscripciones?idInscripcion={inscripcion.Id}&nombreInscripcion={inscripcion.Alumno.apellidoNombre}-{inscripcion.Carrera.nombre}")>
+                            Inscribir a materias
+                        </NavLink>
+                    </td>
                     <td>
                         <NavLink class="nav-link" href=@($"editarinscripcion?idInscripcion={inscripcion.Id}")>
                             Editar
