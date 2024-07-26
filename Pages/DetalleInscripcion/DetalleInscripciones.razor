@@ -13,7 +13,7 @@
 }
 else
 {
-    <NuevoDetalleInscripcion idInscripcion="@idInscripcion" nombreInscripcion="@nombreInscripcion" OnUpdateListaDetalleInscripciones="UpdateListaDetallesInscripciones"/>
+    <NuevoDetalleInscripcion idInscripcion="@idInscripcion" OnGuardar="HandleGuardar" OnCancelar="HandleCancelar" detalleInscripcionEdit="@currentDetalleInscripcion" />
     <table class="table">
         <thead>
             <tr>
@@ -34,9 +34,10 @@ else
                     <td>@detalleInscripcion.Materia?.AnioCarrera?.Nombre</td>
                     <td>@detalleInscripcion.ModalidadCursado</td>
                     <td>
-                        <NavLink class="nav-link" href=@($"editardetalleinscripcion?idDetalleInscripcion={detalleInscripcion.Id}&idInscripcion={idInscripcion}&nombreInscripcion={nombreInscripcion}")>
+                        <button class="btn btn-primary mb-2" @onclick="()=>EditDetalle(detalleInscripcion)">Editar</button>
+                        @* <NavLink class="nav-link" href=@($"editardetalleinscripcion?idDetalleInscripcion={detalleInscripcion.Id}&idInscripcion={idInscripcion}&nombreInscripcion={nombreInscripcion}")>
                             Editar
-                        </NavLink>
+                        </NavLink> *@
                     </td>
                     <td>
                         <button title="Eliminar" class="btn btn-danger" @onclick="@(()=>Eliminar(detalleInscripcion))">Eliminar</button>
@@ -57,6 +58,7 @@ else
     public string? nombreInscripcion { get; set; }
 
     private List<DetalleInscripcion>? detallesInscripcion;
+    private DetalleInscripcion? currentDetalleInscripcion;
 
     protected override async Task OnInitializedAsync()
     {
@@ -81,9 +83,18 @@ else
             StateHasChanged();
         }
     }
-    private async Task UpdateListaDetallesInscripciones()
+    private async Task HandleGuardar()
     {
         detallesInscripcion = await detalleInscripcionService.GetByInscripcionAsync(idInscripcion);
         StateHasChanged();
+        currentDetalleInscripcion = null;
+    }
+    private async Task HandleCancelar()
+    {
+        currentDetalleInscripcion = null;
+    }
+    private async Task EditDetalle(DetalleInscripcion detalleInscripcion)
+    {
+        currentDetalleInscripcion = detalleInscripcion;
     }
 }
