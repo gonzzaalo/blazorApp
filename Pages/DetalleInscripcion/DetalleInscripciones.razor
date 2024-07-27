@@ -86,8 +86,9 @@ else
     private async Task HandleGuardar()
     {
         detallesInscripcion = await detalleInscripcionService.GetByInscripcionAsync(idInscripcion);
-        StateHasChanged();
         currentDetalleInscripcion = null;
+        StateHasChanged();
+        
     }
     private async Task HandleCancelar()
     {

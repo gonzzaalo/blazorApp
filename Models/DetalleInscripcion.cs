@@ -13,7 +13,11 @@ namespace BlazorAppVSCode.Models
         public Materia? Materia { get; set; }
         public override string ToString()
         {
-            return $"{Materia?.Nombre} {ModalidadCursado}" ?? string.Empty;
+            //return $"{Materia?.Nombre} {ModalidadCursado}" ?? string.Empty;
+            return $"Id ={Id} {Environment.NewLine}" +
+                $"ModalidadCursado= {ModalidadCursado} {Environment.NewLine}" +
+                $"InscripcionId= {InscripcionId}{Environment.NewLine}" +
+                $"MateriaId= {MateriaId}";
         }
 
     }
