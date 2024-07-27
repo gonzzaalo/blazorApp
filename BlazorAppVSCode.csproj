@@ -39,7 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Layout\DetalleInscripcion\NuevoDetalleInscripcion.razor">
+    <Content Update="Pages\DetalleInscripcion\NuevoDetalleInscripcion.razor">
       <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
     </Content>
     <Content Update="Pages\EditarCarrera2.razor">
