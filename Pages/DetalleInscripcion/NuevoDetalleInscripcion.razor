@@ -91,7 +91,7 @@ else
         idAnioCarrera = isEditing ? detalleInscripcion?.Materia?.AnioCarreraId : aniosCarrera?.First().Id;
         materias = await materiaService.GetByAnioCarreraAsync(idAnioCarrera);
         if (!isEditing)
-           detalleInscripcion.MateriaId = materias.First().Id;
+            detalleInscripcion.MateriaId = materias.First().Id;
         StateHasChanged();
         logger.LogInformation($"el idAnioCarrera es igual {idAnioCarrera}");
     }
@@ -105,6 +105,7 @@ else
     {
         idAnioCarrera = int.Parse(e.Value.ToString());
         materias= await materiaService.GetByAnioCarreraAsync(idAnioCarrera);
+        detalleInscripcion.MateriaId = materias.First().Id;
     }
 
     private async Task Guardar()
