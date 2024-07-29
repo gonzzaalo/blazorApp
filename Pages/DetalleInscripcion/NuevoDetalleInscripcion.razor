@@ -22,15 +22,7 @@ else
                 <InputSelectMaterias detalleInscripcion="detalleInscripcion" materias="materias" />
                 <InputSelectModalidadEnum detalleInscripcion="detalleInscripcion" />
                 <ValidationSummary />
-                <div class="col-md-1">
-                    <button class="btn btn-primary " type="submit">@guardarButtonText</button>
-                </div>
-                    @if (isEditing)
-                    {
-                        <div class="col-md-1">
-                            <button class="btn btn-primary " @onclick="Cancelar">Cancelar</button>
-                        </div>
-                    }
+                <ButtonsGuardarCancelar isEditing="isEditing"  parentCancelar="Cancelar" />
             </div>
         </div>
     </EditForm>
@@ -53,7 +45,6 @@ else
     public DetalleInscripcion? detalleInscripcion { get; set; }
 
     private bool isEditing => detalleInscripcionEdit != null;
-    private string guardarButtonText => isEditing ? "Actualizar" : "Agregar";
 
     private List<Materia>? materias { get; set; }
     private List<AnioCarrera>? aniosCarrera { get; set; }
