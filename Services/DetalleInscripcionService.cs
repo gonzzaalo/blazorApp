@@ -1,6 +1,9 @@
 ﻿using BlazorAppVSCode.Class;
 using BlazorAppVSCode.Interfaces;
 using BlazorAppVSCode.Models;
+using BlazorAppVSCode.Pages.Materias;
+using System.Net.Http;
+using System.Net;
 using System.Text.Json;
 
 namespace BlazorAppVSCode.Services
@@ -27,6 +30,13 @@ namespace BlazorAppVSCode.Services
                 throw new ApplicationException(content?.ToString());
             }
             return JsonSerializer.Deserialize<List<DetalleInscripcion>>(content, options); ;
+        }
+
+        public async Task<bool> CheckDuplicadoDetalleInscripcionAsync(int? idInscripcion, int? idMateria)
+        {
+            var response = await client.GetAsync($"{_endpoint}/checkduplicado?idInscripcion={idInscripcion}&idMateria={idMateria}");
+            return response.StatusCode == HttpStatusCode.Conflict;
+            
         }
     }
 }

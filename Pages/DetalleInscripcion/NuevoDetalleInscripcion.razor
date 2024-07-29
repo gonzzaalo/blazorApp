@@ -110,12 +110,37 @@ else
 
     private async Task Guardar()
     {
-        logger.LogInformation(detalleInscripcion.ToString());
-        if (isEditing)
-            await detalleInscripcionService.UpdateAsync(detalleInscripcion);
-        else
-            await detalleInscripcionService.AddAsync(detalleInscripcion);
-        await OnGuardar.InvokeAsync();
+        try
+        {
+            logger.LogInformation(detalleInscripcion.ToString());
+            if (isEditing)
+                await detalleInscripcionService.UpdateAsync(detalleInscripcion);
+            else
+            {
+                if (await detalleInscripcionService.CheckDuplicadoDetalleInscripcionAsync(detalleInscripcion.InscripcionId, detalleInscripcion.MateriaId))
+                {
+                    await SweetAlert.FireAsync(new SweetAlertOptions
+                        {
+                            Title = "Materia duplicada",
+                            Text = $"La materia ya existe en la inscripción",
+                            Icon = SweetAlertIcon.Info,
+                            ShowCancelButton = false,
+                            ConfirmButtonText = "Aceptar",
+                        });
+                    return;
+                }
+                else
+                    await detalleInscripcionService.AddAsync(detalleInscripcion);
+            }
+
+            await OnGuardar.InvokeAsync();
+        }
+        catch (Exception ex)
+        {
+            
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+        
     }
 
     private async Task Cancelar()

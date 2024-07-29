@@ -44,7 +44,7 @@ namespace BlazorAppVSCode.Services
 
         public async Task<T?> AddAsync(T? entity)
         {
-            var response=await client.PostAsJsonAsync(_endpoint, entity);
+            var response=await client.PostAsJsonAsync(_endpoint,entity);
             var content=await response.Content.ReadAsStreamAsync();
             if (!response.IsSuccessStatusCode)
             {
