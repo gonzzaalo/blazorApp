@@ -5,6 +5,6 @@ namespace BlazorAppVSCode.Interfaces
     public interface IDetalleInscripcionService : IGenericService<DetalleInscripcion>
     {
         public Task<List<DetalleInscripcion>?> GetByInscripcionAsync(int? id);
-        public Task<bool> CheckDuplicadoDetalleInscripcionAsync(int? idInscripcion, int? idMateria);
+        public Task<bool> CheckDuplicadoDetalleInscripcionAsync(int?idDetalle, int? idInscripcion, int? idMateria);
     }
 }

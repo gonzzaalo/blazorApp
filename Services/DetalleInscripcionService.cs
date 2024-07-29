@@ -32,9 +32,9 @@ namespace BlazorAppVSCode.Services
             return JsonSerializer.Deserialize<List<DetalleInscripcion>>(content, options); ;
         }
 
-        public async Task<bool> CheckDuplicadoDetalleInscripcionAsync(int? idInscripcion, int? idMateria)
+        public async Task<bool> CheckDuplicadoDetalleInscripcionAsync(int? idDetalle, int? idInscripcion, int? idMateria)
         {
-            var response = await client.GetAsync($"{_endpoint}/checkduplicado?idInscripcion={idInscripcion}&idMateria={idMateria}");
+            var response = await client.GetAsync($"{_endpoint}/checkduplicado?idDetalle={idDetalle}&idInscripcion={idInscripcion}&idMateria={idMateria}");
             return response.StatusCode == HttpStatusCode.Conflict;
             
         }
