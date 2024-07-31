@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using BlazorAppVSCode.Interfaces.Commons;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BlazorAppVSCode.Models
 {
-    public class AnioCarrera
+    public class AnioCarrera : IEntityIdNombre
     {
         public int Id { get; set; }
         public string Nombre { get; set; } = string.Empty;
@@ -10,7 +11,7 @@ namespace BlazorAppVSCode.Models
         public Carrera? Carrera { get; set; }
         [NotMapped]
         public string AñoYCarrera {
-            get { return $"{Nombre} {Carrera?.nombre}" ?? string.Empty; } 
+            get { return $"{Nombre} {Carrera?.Nombre}" ?? string.Empty; } 
         }
         public override string ToString()
         {

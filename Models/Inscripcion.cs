@@ -16,7 +16,7 @@ namespace BlazorAppVSCode.Models
         [NotMapped]
         public string? Inscripto
         {
-            get { return $"{Alumno?.apellidoNombre} - {Carrera?.nombre}" ?? string.Empty; }
+            get { return $"{Alumno?.apellidoNombre} - {Carrera?.Nombre}" ?? string.Empty; }
         }
     }
 }

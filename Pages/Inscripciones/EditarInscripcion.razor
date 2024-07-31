@@ -26,7 +26,7 @@ else
         <InputSelect class="form-control mb-2" @bind-Value="inscripcion.CarreraId">
             @foreach (var carrera in carreras)
             {
-                <option value="@carrera.id">@carrera.nombre</option>
+                <option value="@carrera.Id">@carrera.Nombre</option>
             }
         </InputSelect>
         <ValidationSummary />

@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using BlazorAppVSCode.Interfaces.Commons;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 
 namespace BlazorAppVSCode.Models
 {
-    public class Materia
+    public class Materia : IEntityIdNombre
     {
         public int Id { get; set; }
         public string Nombre { get; set; } = string.Empty;

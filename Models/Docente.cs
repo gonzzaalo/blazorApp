@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using BlazorAppVSCode.Interfaces.Commons;
+using System.ComponentModel.DataAnnotations;
 
 namespace BlazorAppVSCode.Models
 {
-    public class Docente
+    public class Docente: IEntityIdNombre
     {
         public int Id { get; set; }
 

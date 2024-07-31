@@ -12,10 +12,7 @@ else
         <DataAnnotationsValidator />
         <div class="container">
             <div class="row">
-                <div class="col-md-3">
-                    <label class="form-label">Turno Examen:</label>
-                    <InputText class="form-control mb-2" type="text" @bind-Value="turnoExamenEdit.Nombre" />
-                </div>
+                <InputTextNombre Entity="@turnoExamenEdit" TextLabel="Turno examen:"/>
                 <ValidationSummary />
                 <ButtonsGuardarCancelar isEditing="@isEditing"  OnCancelar="HandleCancelar" />
             </div>

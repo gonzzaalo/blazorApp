@@ -1,10 +1,10 @@
-﻿using BlazorAppVSCode.Pages.Inscripciones;
+﻿using BlazorAppVSCode.Interfaces.Commons;
 using BlazorAppVSCode.Pages.Materias;
 using System.ComponentModel.DataAnnotations;
 
 namespace BlazorAppVSCode.Models
 {
-    public class AnioLectivo
+    public class AnioLectivo : IEntityIdNombre
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "El nombre debe cargarse obligatoriamente")]

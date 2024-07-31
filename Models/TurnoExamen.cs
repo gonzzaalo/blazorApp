@@ -1,8 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using BlazorAppVSCode.Interfaces.Commons;
+using System.ComponentModel.DataAnnotations;
 
 namespace BlazorAppVSCode.Models
 {
-    public class TurnoExamen
+    public class TurnoExamen : IEntityIdNombre
     {
         public int Id { get; set; }
 

@@ -28,15 +28,15 @@ else
             @foreach (var carrera in carreras)
             {
                 <tr>
-                    <td>@carrera.id</td>
-                    <td>@carrera.nombre</td>
+                    <td>@carrera.Id</td>
+                    <td>@carrera.Nombre</td>
                     <td>
-                        <NavLink class="nav-link" href=@($"anioscarreras?idCarrera={@carrera.id}&nombreCarrera={carrera.nombre}")>
+                        <NavLink class="nav-link" href=@($"anioscarreras?idCarrera={@carrera.Id}&nombreCarrera={carrera.Nombre}")>
                             Años carrera
                         </NavLink>
                     </td>
                     <td>
-                        <NavLink class="nav-link" href=@($"editarcarrera?idCarrera={@carrera.id}")>
+                        <NavLink class="nav-link" href=@($"editarcarrera?idCarrera={@carrera.Id}")>
                             Editar
                         </NavLink>
                     </td>
@@ -62,7 +62,7 @@ else
         SweetAlertResult respuesta = await SweetAlert.FireAsync(new SweetAlertOptions
             {
                 Title = "Borrando Carrera",
-                Text = $"¿Está seguro que desea borrar a la carrera {carrera.nombre}",
+                Text = $"¿Está seguro que desea borrar a la carrera {carrera.Nombre}",
                 Icon = SweetAlertIcon.Warning,
                 ShowCancelButton = true,
                 ConfirmButtonText = "Si, quiero borrarlo!",
@@ -70,7 +70,7 @@ else
             });
         if (respuesta.IsConfirmed)
         {
-            await carreraService.Delete(carrera.id);
+            await carreraService.Delete(carrera.Id);
             carreras = await carreraService.Get();
             StateHasChanged();
         }

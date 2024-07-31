@@ -52,7 +52,7 @@ namespace BlazorAppVSCode.Services
         
         public async Task Put(Carrera? carrera)
         {
-            var response=await client.PutAsJsonAsync($"apicarreras/{carrera?.id}",carrera);
+            var response=await client.PutAsJsonAsync($"apicarreras/{carrera?.Id}",carrera);
             if(!response.IsSuccessStatusCode)
             {
                 throw new ApplicationException(response?.ToString());
