@@ -13,31 +13,7 @@
 else
 {
     <NuevoEditarTurnoExamen turnoExamen="@currentTurnoExamen" OnCancelar="Cancelar" OnGuardar="Guardar" />
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nombre</th>
-                <th></th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var turnoExamen in turnosExamenes)
-            {
-                <tr>
-                    <td>@turnoExamen.Id</td>
-                    <td>@turnoExamen.Nombre</td>
-                    <td>
-                        <button class="btn btn-primary mb-2" @onclick="()=>Editar(turnoExamen)">Editar</button>
-                    </td>
-                    <td>
-                        <button title="Eliminar" class="btn btn-danger" @onclick="@(()=>Eliminar(turnoExamen))">Eliminar</button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <TableIdNombre ListEntity="@(turnosExamenes.Cast<IEntityIdNombre>().ToList())" OnEditar="Editar" OnEliminar="Eliminar" />
 }
 
     @code {
@@ -49,8 +25,9 @@ else
         turnosExamenes = await turnoExamenService.GetAllAsync();
     }
 
-    private async void Eliminar(TurnoExamen turnoExamen)
+    private async void Eliminar(IEntityIdNombre entity)
     {
+        var turnoExamen = (TurnoExamen)entity;
         SweetAlertResult respuesta = await SweetAlert.FireAsync(new SweetAlertOptions
             {
                 Title = "Borrando Turno de examen",
@@ -78,8 +55,9 @@ else
     {
         currentTurnoExamen = null;
     }
-    private async Task Editar(TurnoExamen turnoExamen)
+    private async Task Editar(IEntityIdNombre entity)
     {
+        var turnoExamen = (TurnoExamen)entity;
         currentTurnoExamen = turnoExamen;
     }
 }

@@ -13,44 +13,21 @@
 else
 {
     <NuevoEditarAnioLectivo anioLectivo="@currentAnioLectivo" OnCancelar="Cancelar" OnGuardar="Guardar" />
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nombre</th>
-                <th></th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var anioLectivo in aniosLectivos)
-            {
-                <tr>
-                    <td>@anioLectivo.Id</td>
-                    <td>@anioLectivo.Nombre</td>
-                    <td>
-                        <button class="btn btn-primary mb-2" @onclick="()=>EditAnioLectivo(anioLectivo)">Editar</button>
-                    </td>
-                    <td>
-                        <button title="Eliminar" class="btn btn-danger" @onclick="@(()=>Eliminar(anioLectivo))">Eliminar</button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <TableIdNombre ListEntity="@(aniosLectivos.Cast<IEntityIdNombre>().ToList())" OnEditar="Editar" OnEliminar="Eliminar" />
 }
 
-        @code {
-        private List<AnioLectivo>? aniosLectivos;
-        private AnioLectivo currentAnioLectivo;
+@code {
+    private List<AnioLectivo> aniosLectivos;
+    private AnioLectivo currentAnioLectivo;
 
     protected override async Task OnInitializedAsync()
     {
         aniosLectivos = await anioLectivoService.GetAllAsync();
     }
 
-    private async void Eliminar(AnioLectivo anioLectivo)
+    private async void Eliminar(IEntityIdNombre entity)
     {
+        var anioLectivo = (AnioLectivo)entity;
         SweetAlertResult respuesta = await SweetAlert.FireAsync(new SweetAlertOptions
             {
                 Title = "Borrando Año Lectivo",
@@ -78,8 +55,9 @@ else
     {
         currentAnioLectivo = null;
     }
-    private async Task EditAnioLectivo(AnioLectivo anioLectivo)
+    private async Task Editar(IEntityIdNombre entity)
     {
+        var anioLectivo = (AnioLectivo)entity;
         currentAnioLectivo = anioLectivo;
     }
 }
