@@ -4,7 +4,7 @@
 @if (isEditing)
 {
     <div class="col-md-1">
-        <button class="btn btn-primary " @onclick="childCancelar">Cancelar</button>
+        <button class="btn btn-primary " @onclick="HandleCancelar">Cancelar</button>
     </div>
 }
 @code {
@@ -14,11 +14,11 @@
     private string guardarButtonText => isEditing ? "Actualizar" : "Agregar";
 
     [Parameter]
-    public EventCallback parentCancelar { get; set; }
+    public EventCallback OnCancelar { get; set; }
 
-    private async Task childCancelar()
+    private async Task HandleCancelar()
     {
-        await parentCancelar.InvokeAsync();
+        await OnCancelar.InvokeAsync();
     }
 
 }

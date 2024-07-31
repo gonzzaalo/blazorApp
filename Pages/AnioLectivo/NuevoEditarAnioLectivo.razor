@@ -1,0 +1,77 @@
+﻿@inject IGenericService<AnioLectivo> anioLectivoService
+@inject SweetAlertService SweetAlert
+@inject ILogger<NuevoEditarAnioLectivo> logger
+
+@if (anioLectivoEdit == null )
+{
+    <p><em>Cargando...</em></p>
+}
+else
+{
+    <div style="background-color: @(isEditing ? "lightyellow": "white")">
+        <EditForm Model="anioLectivoEdit" OnValidSubmit="Guardar">
+        <DataAnnotationsValidator />
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <label class="form-label">Año:</label>
+                    <InputText class="form-control mb-2" type="text" @bind-Value="anioLectivoEdit.Nombre" />
+                </div>
+                <ValidationSummary />
+                <ButtonsGuardarCancelar isEditing="@isEditing"  OnCancelar="HandleCancelar" />
+            </div>
+        </div>
+    </EditForm>
+    </div>
+}
+@code {
+
+    [Parameter]
+    public EventCallback OnGuardar { get; set; }
+
+    [Parameter]
+    public EventCallback OnCancelar { get; set; }
+
+    [Parameter]
+    public AnioLectivo? anioLectivo { get; set; }
+
+    public AnioLectivo? anioLectivoEdit { get; set; }
+
+
+
+    private bool isEditing => anioLectivo != null;
+
+    private List<AnioLectivo>? aniosLectivos { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (anioLectivo == null)
+        {
+            anioLectivoEdit = new AnioLectivo();
+            logger.LogInformation("se instanció anioLectivoEdit");
+        } else
+        {
+            anioLectivo.CopyPropertiesTo(anioLectivoEdit);
+        }
+
+
+        StateHasChanged();
+    }
+
+
+    private async Task Guardar()
+    {
+        logger.LogInformation($"la variable isEditing={isEditing} y el anio lectivo={anioLectivoEdit?.ToString()}");
+        if (isEditing)
+                await anioLectivoService.UpdateAsync(anioLectivoEdit);
+            else
+            await anioLectivoService.AddAsync(anioLectivoEdit);
+            await OnGuardar.InvokeAsync();
+    }
+
+    private async Task HandleCancelar()
+    {
+        await OnCancelar.InvokeAsync();
+    }
+}
+

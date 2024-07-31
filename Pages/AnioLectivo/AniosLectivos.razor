@@ -1,0 +1,85 @@
+﻿@page "/anioslectivos"
+
+@inject IGenericService<AnioLectivo> anioLectivoService
+@inject SweetAlertService SweetAlert
+
+<PageTitle>Años Lectivos</PageTitle>
+<h1>Años Lectivos</h1>
+
+@if (aniosLectivos == null)
+{
+    <p><em>Cargando...</em></p>
+}
+else
+{
+    <NuevoEditarAnioLectivo anioLectivo="@currentAnioLectivo" OnCancelar="Cancelar" OnGuardar="Guardar" />
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var anioLectivo in aniosLectivos)
+            {
+                <tr>
+                    <td>@anioLectivo.Id</td>
+                    <td>@anioLectivo.Nombre</td>
+                    <td>
+                        <button class="btn btn-primary mb-2" @onclick="()=>EditAnioLectivo(anioLectivo)">Editar</button>
+                    </td>
+                    <td>
+                        <button title="Eliminar" class="btn btn-danger" @onclick="@(()=>Eliminar(anioLectivo))">Eliminar</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+        @code {
+        private List<AnioLectivo>? aniosLectivos;
+        private AnioLectivo currentAnioLectivo;
+
+    protected override async Task OnInitializedAsync()
+    {
+        aniosLectivos = await anioLectivoService.GetAllAsync();
+    }
+
+    private async void Eliminar(AnioLectivo anioLectivo)
+    {
+        SweetAlertResult respuesta = await SweetAlert.FireAsync(new SweetAlertOptions
+            {
+                Title = "Borrando Año Lectivo",
+                Text = $"¿Está seguro que desea borrar el año lectivo {anioLectivo.Nombre}",
+                Icon = SweetAlertIcon.Warning,
+                ShowCancelButton = true,
+                ConfirmButtonText = "Si, quiero borrarlo!",
+                CancelButtonText = "No, espera"
+            });
+        if (respuesta.IsConfirmed)
+        {
+            await anioLectivoService.DeleteAsync(anioLectivo.Id);
+            aniosLectivos = await anioLectivoService.GetAllAsync();
+            StateHasChanged();
+        }
+    }
+    private async Task Guardar()
+    {
+        aniosLectivos = await anioLectivoService.GetAllAsync();
+        currentAnioLectivo = null;
+        StateHasChanged();
+
+    }
+    private async Task Cancelar()
+    {
+        currentAnioLectivo = null;
+    }
+    private async Task EditAnioLectivo(AnioLectivo anioLectivo)
+    {
+        currentAnioLectivo = anioLectivo;
+    }
+}

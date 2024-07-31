@@ -12,7 +12,7 @@
 }
 else
 {
-    <NuevoDetalleInscripcion idInscripcion="@idInscripcion" OnGuardar="HandleGuardar" OnCancelar="HandleCancelar" detalleInscripcion="@currentDetalleInscripcion" />
+    <NuevoDetalleInscripcion idInscripcion="@idInscripcion" OnGuardar="Guardar" OnCancelar="Cancelar" detalleInscripcion="@currentDetalleInscripcion" />
     <table class="table">
         <thead>
             <tr>
@@ -34,9 +34,6 @@ else
                     <td>@detalleInscripcion.ModalidadCursado</td>
                     <td>
                         <button class="btn btn-primary mb-2" @onclick="()=>EditDetalle(detalleInscripcion)">Editar</button>
-                        @* <NavLink class="nav-link" href=@($"editardetalleinscripcion?idDetalleInscripcion={detalleInscripcion.Id}&idInscripcion={idInscripcion}&nombreInscripcion={nombreInscripcion}")>
-                            Editar
-                        </NavLink> *@
                     </td>
                     <td>
                         <button title="Eliminar" class="btn btn-danger" @onclick="@(()=>Eliminar(detalleInscripcion))">Eliminar</button>
@@ -82,14 +79,14 @@ else
             StateHasChanged();
         }
     }
-    private async Task HandleGuardar()
+    private async Task Guardar()
     {
         detallesInscripcion = await detalleInscripcionService.GetByInscripcionAsync(idInscripcion);
         currentDetalleInscripcion = null;
         StateHasChanged();
         
     }
-    private async Task HandleCancelar()
+    private async Task Cancelar()
     {
         currentDetalleInscripcion = null;
     }
