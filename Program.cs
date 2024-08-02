@@ -19,6 +19,7 @@ builder.Services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
 builder.Services.AddScoped<IAnioCarreraService, AnioCarreraService>();
 builder.Services.AddScoped<IMateriaService, MateriaService>();
 builder.Services.AddScoped<IDetalleInscripcionService, DetalleInscripcionService>();
+builder.Services.AddScoped<IMesaExamenService, MesaExamenService>();
 
 builder.Services.AddSweetAlert2();
 await builder.Build().RunAsync();

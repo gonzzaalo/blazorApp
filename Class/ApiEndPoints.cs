@@ -11,6 +11,8 @@
         public static string AnioLectivo { get; set; } = "apianioslectivos";
         public static string TurnoExamen { get; set; } = "apiturnosexamenes";
         public static string Docente { get; set; } = "apidocentes";
+        public static string MesaExamen { get; set; } = "apimesasexamenes";
+        public static string DetalleMesaExamen { get; set; } = "apidetallesmesasexamenes";
 
         public static string GetEndpoint(string name)
         {
@@ -25,6 +27,8 @@
                 nameof(AnioLectivo) => AnioLectivo,
                 nameof(TurnoExamen) => TurnoExamen,
                 nameof(Docente) => Docente,
+                nameof(MesaExamen) => MesaExamen,
+                nameof(DetalleMesaExamen) => DetalleMesaExamen,
                 _ => throw new ArgumentException($"Endpoint '{name}' no está definido.")
             };
         }
