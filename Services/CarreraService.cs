@@ -1,5 +1,5 @@
 ﻿using BlazorAppVSCode.Interfaces;
-using BlazorAppVSCode.Models;
+using BlazorAppVSCode.Models.Commons;
 using System.Net.Http.Json;
 using System.Text.Json;
 using static System.Net.WebRequestMethods;

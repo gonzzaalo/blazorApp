@@ -1,4 +1,4 @@
-﻿namespace BlazorAppVSCode.Models
+﻿namespace BlazorAppVSCode.Enums
 {
     public enum TipoIntegranteEnum
     {

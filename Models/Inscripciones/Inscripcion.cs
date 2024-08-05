@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using BlazorAppVSCode.Models.Commons;
 
-namespace BlazorAppVSCode.Models
+namespace BlazorAppVSCode.Models.Inscripciones
 {
     public class Inscripcion
     {
@@ -13,10 +14,12 @@ namespace BlazorAppVSCode.Models
         public Alumno? Alumno { get; set; } 
         public int CarreraId { get; set; }
         public Carrera? Carrera { get; set; }
+        public int CicloLectivoId { get; set; }
+        public CicloLectivo? CicloLectivo { get; set; }
         [NotMapped]
         public string? Inscripto
         {
-            get { return $"{Alumno?.apellidoNombre} - {Carrera?.Nombre}" ?? string.Empty; }
+            get { return $"{Alumno?.ApellidoNombre} - {Carrera?.Nombre}" ?? string.Empty; }
         }
     }
 }

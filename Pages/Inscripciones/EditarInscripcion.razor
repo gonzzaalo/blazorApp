@@ -13,16 +13,16 @@ else
     <h3>Editando una inscripción </h3>
     <EditForm Model="inscripcion" OnValidSubmit="GuardarInscripcion">
         <DataAnnotationsValidator />
-        <label class="form-control mb-2" >Fecha:</label>
+        <label class="form-label mb-2">Fecha:</label>
         <InputDate class="form-control mb-2"  @bind-Value="inscripcion.Fecha"/>
-        <label class="form-control mb-2">Alumno:</label>
+        <label class="form-label mb-2">Alumno:</label>
         <InputSelect class="form-control mb-2" @bind-Value="inscripcion.AlumnoId">
             @foreach(var alumno in alumnos)
             {
-                <option value="@alumno.Id">@alumno.apellidoNombre</option>
+                <option value="@alumno.Id">@alumno.ApellidoNombre</option>
             }
         </InputSelect>
-        <label class="form-control mb-2">Carrera:</label>
+        <label class="form-label mb-2">Carrera:</label>
         <InputSelect class="form-control mb-2" @bind-Value="inscripcion.CarreraId">
             @foreach (var carrera in carreras)
             {

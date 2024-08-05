@@ -1,6 +1,6 @@
 ﻿using BlazorAppVSCode.Class;
 using BlazorAppVSCode.Interfaces;
-using BlazorAppVSCode.Models;
+using BlazorAppVSCode.Models.Inscripciones;
 using BlazorAppVSCode.Pages.Materias;
 using System.Net.Http;
 using System.Net;

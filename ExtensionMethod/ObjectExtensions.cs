@@ -25,5 +25,25 @@ namespace BlazorAppVSCode.ExtensionMethod
                 }
             }
         }
+        public static string PropertiesToString<T>(this T source)
+        {
+            if (source == null)
+            {
+                throw new ArgumentNullException("source");
+            }
+            Type type = typeof(T);
+
+            string stringReturn=string.Empty;
+
+            foreach (PropertyInfo property in type.GetProperties(BindingFlags.Public | BindingFlags.Instance))
+            {
+                if (property.CanRead && property.CanWrite)
+                {
+                    object? value = property.GetValue(source, null);
+                    stringReturn += $"{property.Name}={value?.ToString()??"null"}{Environment.NewLine}";
+                }
+            }
+            return stringReturn;
+        }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using BlazorAppVSCode.Models.Commons;
+using BlazorAppVSCode.Models.MesasExamenes;
 
-namespace BlazorAppVSCode.Models
+namespace BlazorAppVSCode.Models.MesasExamenes
 {
     public class MesaExamen
     {

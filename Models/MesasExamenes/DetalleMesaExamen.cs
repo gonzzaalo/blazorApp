@@ -1,6 +1,8 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using BlazorAppVSCode.Enums;
+using BlazorAppVSCode.Models.Commons;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BlazorAppVSCode.Models
+namespace BlazorAppVSCode.Models.MesasExamenes
 {
     public class DetalleMesaExamen
     {

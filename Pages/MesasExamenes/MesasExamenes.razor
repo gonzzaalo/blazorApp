@@ -1,5 +1,5 @@
 ﻿@page "/mesasexamenes"
-@using BlazorAppVSCode.Components.MesaExamen
+@using BlazorAppVSCode.Components.Commons
 
 @inject IGenericService<TurnoExamen> turnoExamenService
 @inject IGenericService<Carrera> carreraService
@@ -16,6 +16,7 @@
 }
 else
 {
+    
     if(idTurnoExamenSeleccionado==null)
     {
         <ListCard ListEntity="@(turnosExamenes.Cast<IEntityIdNombre>().ToList())" OnSeleccionar="SeleccionarTurnoExamem" TituloCard="Turno de examen" />
@@ -27,6 +28,9 @@ else
             <ListCard ListEntity="@(carreras.Cast<IEntityIdNombre>().ToList())" OnSeleccionar="SeleccionarCarrera" TituloCard="Carrera" />
         }else
         {
+            <div class="text-end">
+                <button class="btn btn-info" @onclick="VolverAListaCarreras">Volver a lista de carreras</button>
+            </div>
             <TableMesaExamen MesasExamenes="mesasExamenes"/>
         }
         
@@ -59,6 +63,13 @@ else
         idCarreraSeleccionada = idCarrera;
         mesasExamenes = await mesaExamenService.GetByTurnoAndCarreraAsync(idTurnoExamenSeleccionado, idCarreraSeleccionada);
         logger.LogInformation(mesasExamenes.Count.ToString());
+        StateHasChanged();
+    }
+
+    private async Task VolverAListaCarreras()
+    {
+        idCarreraSeleccionada = null;
+        mesasExamenes = null;
         StateHasChanged();
     }
 

@@ -1,7 +1,8 @@
 ﻿using BlazorAppVSCode.Enums;
+using BlazorAppVSCode.Models.Commons;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BlazorAppVSCode.Models
+namespace BlazorAppVSCode.Models.Inscripciones
 {
     public class DetalleInscripcion
     {

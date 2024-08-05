@@ -1,6 +1,6 @@
 ﻿using BlazorAppVSCode.Class;
 using BlazorAppVSCode.Interfaces;
-using BlazorAppVSCode.Models;
+using BlazorAppVSCode.Models.Commons;
 using System.Text.Json;
 
 namespace BlazorAppVSCode.Services

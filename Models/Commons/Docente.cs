@@ -1,9 +1,9 @@
 ﻿using BlazorAppVSCode.Interfaces.Commons;
 using System.ComponentModel.DataAnnotations;
 
-namespace BlazorAppVSCode.Models
+namespace BlazorAppVSCode.Models.Commons
 {
-    public class TurnoExamen : IEntityIdNombre
+    public class Docente: IEntityIdNombre
     {
         public int Id { get; set; }
 
@@ -12,7 +12,8 @@ namespace BlazorAppVSCode.Models
 
         public override string ToString()
         {
-            return Nombre;
+            return $"Id ={Id} {Environment.NewLine}" +
+                   $"Nombre= {Nombre} {Environment.NewLine}";
         }
     }
 }

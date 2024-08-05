@@ -30,10 +30,10 @@ else
             @foreach (var student in students)
             {
                 <tr>
-                    <td>@student.apellidoNombre</td>
-                    <td>@student.telefono</td>
-                    <td>@student.direccion</td>
-                    <td>@student.email</td>
+                    <td>@student.ApellidoNombre</td>
+                    <td>@student.Telefono</td>
+                    <td>@student.Direccion</td>
+                    <td>@student.Email</td>
                     <td>
                         <NavLink class="nav-link" href=@($"editaralumno?idAlumno={student.Id}")>
                             Editar

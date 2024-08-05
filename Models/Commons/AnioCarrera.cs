@@ -1,7 +1,8 @@
 ﻿using BlazorAppVSCode.Interfaces.Commons;
+using BlazorAppVSCode.Models.Commons;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace BlazorAppVSCode.Models
+namespace BlazorAppVSCode.Models.Commons
 {
     public class AnioCarrera : IEntityIdNombre
     {

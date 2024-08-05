@@ -8,11 +8,12 @@
         public static string Materia { get; set; } = "apimaterias";
         public static string Inscripcion { get; set; } = "apiinscripciones";
         public static string DetalleInscripcion { get; set; } = "apidetalleinscripciones";
-        public static string AnioLectivo { get; set; } = "apianioslectivos";
+        public static string CicloLectivo { get; set; } = "apicicloslectivos";
         public static string TurnoExamen { get; set; } = "apiturnosexamenes";
         public static string Docente { get; set; } = "apidocentes";
         public static string MesaExamen { get; set; } = "apimesasexamenes";
         public static string DetalleMesaExamen { get; set; } = "apidetallesmesasexamenes";
+        public static string Hora { get; set; } = "apihoras";
 
         public static string GetEndpoint(string name)
         {
@@ -24,11 +25,12 @@
                 nameof(Materia) => Materia,
                 nameof(Inscripcion) => Inscripcion,
                 nameof(DetalleInscripcion) => DetalleInscripcion,
-                nameof(AnioLectivo) => AnioLectivo,
+                nameof(CicloLectivo) => CicloLectivo,
                 nameof(TurnoExamen) => TurnoExamen,
                 nameof(Docente) => Docente,
                 nameof(MesaExamen) => MesaExamen,
                 nameof(DetalleMesaExamen) => DetalleMesaExamen,
+                nameof(Hora) => Hora,
                 _ => throw new ArgumentException($"Endpoint '{name}' no está definido.")
             };
         }

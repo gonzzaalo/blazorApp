@@ -11,8 +11,10 @@ else
     <h3>Editando carrera @carrera.Nombre</h3>
     <EditForm Model="carrera" OnValidSubmit="GuardarCarrera" >
         <DataAnnotationsValidator />
-        <label class="form-control mb-2" for="txtCarrera">Carrera:</label>
+        <label class="form-label mb-2" for="txtCarrera">Carrera:</label>
         <InputText class="form-control mb-2" type="text" @bind-Value="carrera.Nombre" />
+        <label class="form-label mb-2" for="txtCarrera">Sigla:</label>
+        <InputText class="form-control mb-2" type="text" @bind-Value="carrera.Sigla" />
         <ValidationSummary />
         <button class="btn btn-primary mb-2" type="submit">Guardar</button>
         <button class="btn btn-primary mb-2" type="button" @onclick="@(()=>NavigationManager.NavigateTo("/carreras"))">Volver a la lista</button>

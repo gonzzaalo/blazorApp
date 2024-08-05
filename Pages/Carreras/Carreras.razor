@@ -20,6 +20,8 @@ else
             <tr>
                 <th>Id</th>
                 <th>Nombre</th>
+                <th>Sigla</th>
+                <th></th>
                 <th></th>
                 <th></th>
             </tr>
@@ -30,6 +32,7 @@ else
                 <tr>
                     <td>@carrera.Id</td>
                     <td>@carrera.Nombre</td>
+                    <td>@carrera.Sigla</td>
                     <td>
                         <NavLink class="nav-link" href=@($"anioscarreras?idCarrera={@carrera.Id}&nombreCarrera={carrera.Nombre}")>
                             Años carrera

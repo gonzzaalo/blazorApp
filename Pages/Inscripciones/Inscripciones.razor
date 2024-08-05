@@ -1,64 +1,39 @@
 ﻿@page "/inscripciones"
 
 @inject IGenericService<Inscripcion> inscripcionService
+@inject IGenericService<CicloLectivo> cicloLectivoService
 @inject SweetAlertService SweetAlert
 
 <PageTitle>Inscripciones</PageTitle>
 <h1>Inscripciones a materias</h1>
 
-@if (inscripciones == null)
+@if (inscripciones == null && cicloslectivos== null)
 {
     <p><em>Cargando...</em></p>
 }
 else
 {
-    <NavLink class="nav-link" href=@($"nuevainscripcion")>  
-        Nueva Inscripción
-    </NavLink>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Alumno</th>
-                <th>Carrera</th>
-                <th></th>
-                <th></th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var inscripcion in inscripciones)
-            {
-                <tr>
-                    <td>@inscripcion.Id</td>
-                    <td>@inscripcion.Alumno.apellidoNombre</td>
-                    <td>@inscripcion.Carrera.Nombre</td>
-                    <td>
-                        <NavLink class="nav-link" href=@($"detalleinscripciones?idInscripcion={inscripcion.Id}&nombreInscripcion={inscripcion.Alumno.apellidoNombre}-{inscripcion.Carrera.Nombre}")>
-                            Inscribir a materias
-                        </NavLink>
-                    </td>
-                    <td>
-                        <NavLink class="nav-link" href=@($"editarinscripcion?idInscripcion={inscripcion.Id}")>
-                            Editar
-                        </NavLink>
-                    </td>
-                    <td>
-                        <button title="Eliminar" class="btn btn-danger" @onclick="@(()=>Eliminar(inscripcion))">Eliminar</button>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    if (idCicloLectivoSeleccionado == null)
+    {
+        <ListCard ListEntity="@(cicloslectivos.Cast<IEntityIdNombre>().ToList())" OnSeleccionar="SeleccionarCicloLectivo" TituloCard="Ciclo Lectivo" />
+    }else
+    {
+        <NavLink class="nav-link" href=@($"nuevainscripcion?idCicloLectivo={idCicloLectivoSeleccionado}")> Nueva Inscripción</NavLink>
+
+        <TableInscripciones Inscripciones="@inscripciones" OnEliminar="Eliminar" />
+    }
 }
 
 @code {
 
     private List<Inscripcion>? inscripciones;
+    private List<CicloLectivo>? cicloslectivos;
+    private int? idCicloLectivoSeleccionado;
 
     protected override async Task OnInitializedAsync()
     {
         inscripciones = await inscripcionService.GetAllAsync();
+        cicloslectivos = await cicloLectivoService.GetAllAsync();
     }
 
     private async void Eliminar(Inscripcion inscripcion)
@@ -66,7 +41,7 @@ else
         SweetAlertResult respuesta = await SweetAlert.FireAsync(new SweetAlertOptions
             {
                 Title = "Borrando Inscripción",
-                Text = $"¿Está seguro que desea borrar la inscripción de {inscripcion.Alumno?.apellidoNombre}",
+                Text = $"¿Está seguro que desea borrar la inscripción de {inscripcion.Alumno?.ApellidoNombre}",
                 Icon = SweetAlertIcon.Warning,
                 ShowCancelButton = true,
                 ConfirmButtonText = "Si, quiero borrarlo!",
@@ -78,5 +53,11 @@ else
             inscripciones = await inscripcionService.GetAllAsync();
             StateHasChanged();
         }
+    }
+
+    private async Task SeleccionarCicloLectivo(int idCicloLectivo)
+    {
+        idCicloLectivoSeleccionado = idCicloLectivo;
+        StateHasChanged();
     }
 }

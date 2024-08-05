@@ -1,4 +1,4 @@
-﻿using BlazorAppVSCode.Models;
+﻿using BlazorAppVSCode.Models.Commons;
 
 namespace BlazorAppVSCode.Interfaces
 {
